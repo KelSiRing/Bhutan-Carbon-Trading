@@ -1,0 +1,6 @@
+{
+  "name": "Bhutan Carbon Exchange (BCX)",
+  "description": "A futuristic digital ecosystem for tracking emissions, trading carbon credits, and financing green initiatives in Bhutan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["Real-time carbon tracking", "Carbon credit marketplace", "Green financing"]
+}

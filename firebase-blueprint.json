@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user industrial profile, roles, and balance.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["industry", "admin", "investor"] },
+        "industryType": { "type": "string" },
+        "carbonCredits": { "type": "number" },
+        "totalEmissions": { "type": "number" },
+        "joinedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "carbonCredits", "totalEmissions"]
+    },
+    "SensorData": {
+      "title": "Sensor Data",
+      "description": "Real-time gas levels from ESP32 MQ-2/MQ-3 sensors.",
+      "type": "object",
+      "properties": {
+        "deviceId": { "type": "string" },
+        "industryId": { "type": "string" },
+        "mq2": { "type": "number" },
+        "mq3": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["deviceId", "industryId", "mq2", "mq3", "timestamp"]
+    },
+    "Transaction": {
+      "title": "Market Transaction",
+      "description": "Records of carbon credit trades.",
+      "type": "object",
+      "properties": {
+        "fromId": { "type": "string" },
+        "toId": { "type": "string" },
+        "amount": { "type": "number" },
+        "pricePerCredit": { "type": "number" },
+        "totalPrice": { "type": "number" },
+        "type": { "type": "string", "enum": ["buy", "sell"] },
+        "status": { "type": "string", "enum": ["pending", "completed", "cancelled"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fromId", "toId", "amount", "pricePerCredit", "totalPrice", "type", "status", "timestamp"]
+    },
+    "FinancingProject": {
+      "title": "Green Financing Project",
+      "description": "Renewable energy projects for investment.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["solar", "wind", "hydro"] },
+        "targetAmount": { "type": "number" },
+        "currentAmount": { "type": "number" },
+        "roi": { "type": "number" },
+        "location": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "type", "targetAmount", "currentAmount", "roi"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles and industry details."
+    },
+    "/emissions/{emissionId}": {
+      "schema": "SensorData",
+      "description": "Historical emission logs."
+    },
+    "/marketplace/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Carbon credit trading transactions."
+    },
+    "/projects/{projectId}": {
+      "schema": "FinancingProject",
+      "description": "Investment opportunities in green energy."
+    }
+  }
+}
